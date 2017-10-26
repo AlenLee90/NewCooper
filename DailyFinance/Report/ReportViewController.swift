@@ -71,7 +71,8 @@ class ReportViewController: UIViewController {
                     }
                 }
                 if amount!.isEmpty {
-                    amount = "044"
+                    //github push
+                    amount = "0"
                 }
                 
                 let entry = PieChartDataEntry(value: Double(amount!)!, label: label)
