@@ -40,6 +40,10 @@ class InputDataController: UIViewController,UIPickerViewDelegate,UIPickerViewDat
     var longitude :Double?
     var myLocation :CLLocationCoordinate2D?
     var location :String?
+    
+    let inputDataService = InputDataService()
+    
+    var inputDetailModel :InputDetail?
 
     
     override func viewDidLoad() {
@@ -49,14 +53,8 @@ class InputDataController: UIViewController,UIPickerViewDelegate,UIPickerViewDat
         
         segUi.apportionsSegmentWidthsByContent = true
         
-        self.database = DatabaseHelper.postRequest()
-        do{
-         let pickerLists = try self.database.prepare(self.categoryTable)
-            for pickerList in pickerLists{
-                pickerData.append(pickerStruct(categoryId: pickerList[Expression<Int>("category_id")],categoryName: pickerList[Expression<String>("category_name")]))
-            }
-        }catch{
-            print(error)
+        for pickerList in inputDataService.selectPickerList(){
+            pickerData.append(pickerStruct(categoryId: pickerList[Expression<Int>("category_id")],categoryName: pickerList[Expression<String>("category_name")]))
         }
         
         manager.delegate = self
@@ -96,32 +94,29 @@ class InputDataController: UIViewController,UIPickerViewDelegate,UIPickerViewDat
     }
     
     @IBAction func insertData(_ sender: UIButton) {
-        var status: Bool = false
-        let insertData = Table("input_detail").insert(
-            Expression<Int?>("amount") <- Int(amountOfMoney.text!),
-            Expression<Int?>("category_id") <- categoryId,
-            Expression<Int>("type_flag") <- segUi.selectedSegmentIndex,
-            Expression<Date>("create_time") <- Date(),
-            Expression<Date>("update_time") <- Date(),
-            Expression<Int>("currency_id") <- 7,
-            Expression<Int>("delete_flag") <- 0,
-            Expression<String>("comment") <- "abc",
-            Expression<String>("image_address") <- "abc",
-            Expression<String?>("location") <- location
-        )
-
-        do{
-            try self.database.run(insertData)
-            print("Inserted Data")
-            status = true
-        }catch{
-            print(error)
+        var errorFlag :Bool = false
+        if (amountOfMoney.text?.isEmpty)! {
+            createAlert(title: "Attention", message: "You do not input amount!")
+            errorFlag = true
         }
-        amountOfMoney.text! = ""
-        if status == true {
-            createAlert(title: "Succeed", message: "You have inserted the data!")
-        } else {
-            createAlert(title: "Fail", message: "You fail to inserted the data!")
+        
+        if errorFlag == false {
+        
+            let tempCategoryId = String(categoryId!)
+            inputDetailModel = InputDetail(id: "",amount: String(Int(amountOfMoney.text!)!),categoryId: tempCategoryId,typeFlag: String(segUi.selectedSegmentIndex),createTime: Date(),updateTime: Date(),currencyId: "7",deleteFlag: "0",comment: "abc",imageAddress: "abc",location: location!)
+        
+            var status: Bool = false
+
+            if inputDataService.insertData(inputDetailModal: inputDetailModel!) == true {
+                status = true
+            }
+            amountOfMoney.text! = ""
+            if status == true {
+                createAlert(title: "Succeed", message: "You have inserted the data!")
+            } else {
+                createAlert(title: "Fail", message: "You fail to inserted the data!")
+            }
+        
         }
     }
     

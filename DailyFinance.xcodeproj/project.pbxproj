@@ -11,6 +11,8 @@
 		F95B68541FA44EBE000715C6 /* CommonCurrency.swift in Sources */ = {isa = PBXBuildFile; fileRef = F95B68531FA44EBE000715C6 /* CommonCurrency.swift */; };
 		F95B68561FA44F44000715C6 /* CommonCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F95B68551FA44F44000715C6 /* CommonCategory.swift */; };
 		F95B68581FA45D89000715C6 /* ReportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F95B68571FA45D89000715C6 /* ReportService.swift */; };
+		F95B685A1FA46CD1000715C6 /* InputDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F95B68591FA46CD1000715C6 /* InputDataService.swift */; };
+		F95B685D1FA4A3E9000715C6 /* ViewService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F95B685C1FA4A3E9000715C6 /* ViewService.swift */; };
 		F96781871F9C75AF0079A4EA /* SQLite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F967817A1F9C75A50079A4EA /* SQLite.framework */; };
 		F96781891F9C75B40079A4EA /* SQLite.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F967817A1F9C75A50079A4EA /* SQLite.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F96781C51F9CD9CF0079A4EA /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F96781BC1F9CD97E0079A4EA /* Charts.framework */; };
@@ -142,6 +144,8 @@
 		F95B68531FA44EBE000715C6 /* CommonCurrency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonCurrency.swift; sourceTree = "<group>"; };
 		F95B68551FA44F44000715C6 /* CommonCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonCategory.swift; sourceTree = "<group>"; };
 		F95B68571FA45D89000715C6 /* ReportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportService.swift; sourceTree = "<group>"; };
+		F95B68591FA46CD1000715C6 /* InputDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputDataService.swift; sourceTree = "<group>"; };
+		F95B685C1FA4A3E9000715C6 /* ViewService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewService.swift; sourceTree = "<group>"; };
 		F967814C1F9C6FA60079A4EA /* DailyFinance.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DailyFinance.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F96781681F9C74CC0079A4EA /* DailyFinanceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DailyFinanceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F967816F1F9C75A50079A4EA /* SQLite.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SQLite.xcodeproj; path = "../../SQLite.swift-update-docs/SQLite.xcodeproj"; sourceTree = "<group>"; };
@@ -290,6 +294,7 @@
 				F98F1F8F1F924FB80001CC12 /* DetailViewController.swift */,
 				F9FD23631F963043005BD2B9 /* View.storyboard */,
 				F9F974A91F9B983100B51D23 /* DetailTableViewCell.swift */,
+				F95B685C1FA4A3E9000715C6 /* ViewService.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -299,6 +304,7 @@
 			children = (
 				F9B0E8B21F94DDBF00E08801 /* InputDataController.swift */,
 				F9FD23651F96306D005BD2B9 /* InputData.storyboard */,
+				F95B68591FA46CD1000715C6 /* InputDataService.swift */,
 			);
 			path = InputData;
 			sourceTree = "<group>";
@@ -541,9 +547,11 @@
 				F9FEDFB41F9385830015FB27 /* SecondViewController.swift in Sources */,
 				F9B0E8B11F94DD2B00E08801 /* TabBarController.swift in Sources */,
 				F98F1F901F924FB80001CC12 /* DetailViewController.swift in Sources */,
+				F95B685D1FA4A3E9000715C6 /* ViewService.swift in Sources */,
 				F95B68561FA44F44000715C6 /* CommonCategory.swift in Sources */,
 				F9B0E8B31F94DDBF00E08801 /* InputDataController.swift in Sources */,
 				F98F1F8E1F924FB80001CC12 /* AppDelegate.swift in Sources */,
+				F95B685A1FA46CD1000715C6 /* InputDataService.swift in Sources */,
 				F9F974AA1F9B983100B51D23 /* DetailTableViewCell.swift in Sources */,
 				F9FDC1951F978083006D2493 /* PersonalViewController.swift in Sources */,
 				F95B68541FA44EBE000715C6 /* CommonCurrency.swift in Sources */,

@@ -11,16 +11,7 @@ import SQLite
 
 class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    var foods = ["Apple","Watermelon","Pear","Peach","Banana","Lemon","Orange"]
-    
-    var database: Connection!
-    
     let inputDetailTable = Table("input_detail")
-    
-    var labelOneData :String?
-    var labelTwoData :String?
-    var labelThreeData :String?
-    var labelFourData :String?
     
     var labelOneArray = [String]()
     var labelTwoArray = [NSAttributedString]()
@@ -32,13 +23,15 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     var selectedDatas :AnySequence<Row>!
     
+    let viewService = ViewService()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        selectData()
+        selectedDatas = viewService.selectTableData()
         var counter = 0
         for _ in selectedDatas{
             counter += 1
@@ -47,7 +40,7 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell  {
-        selectData()
+        selectedDatas = viewService.selectTableData()
 
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! DetailTableViewCell
         for selectedData in selectedDatas{
@@ -101,14 +94,13 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let guest = segue.destination as! SecondViewController
-        guest.viewData = sender as! String
+        guest.segueData = sender as? String
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         
         let updateData = self.inputDetailTable.filter(self.id == Int(labelOneArray[indexPath.row])!)
         let updateQuery = updateData.update(self.deleteFlag <- 1)
-        
         let alert = UIAlertController(title:"Confirm", message:"Are you sure to delete the date?" ,preferredStyle:UIAlertControllerStyle.alert)
         
         alert.addAction(UIAlertAction(title:"Yes", style:UIAlertActionStyle.default, handler:{(action) in
@@ -117,12 +109,11 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
             self.labelThreeArray.remove(at: indexPath.row)
             self.labelFourArray.remove(at: indexPath.row)
             
-            do {
-                try self.database.run(updateQuery)
-            } catch {
-                print(error)
+            if self.viewService.deleteTableData(updateQuery: updateQuery) == true {
+                self.createAlert(title: "Succeed", message: "Deleted the data!")
+            } else {
+                self.createAlert(title: "Failed", message: "Fail to delete data!")
             }
-            
             alert.dismiss(animated: true, completion: nil)
             tableView.reloadData()
         }))
@@ -137,16 +128,15 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
     }
     
-    func selectData() {
-        self.database = DatabaseHelper.postRequest()
+    func createAlert (title:String, message:String){
         
-        do{
-            let selectedData = self.inputDetailTable.filter(self.deleteFlag == 0)
-            let selectedDatas = try self.database.prepare(selectedData)
-            self.selectedDatas = selectedDatas
-        }catch{
-            print(error)
-        }
+        let alert = UIAlertController(title:title, message:message ,preferredStyle:UIAlertControllerStyle.alert)
+        
+        alert.addAction(UIAlertAction(title:"OK", style:UIAlertActionStyle.default, handler:{(action) in
+            alert.dismiss(animated: true, completion: nil)
+        }))
+        
+        self.present(alert, animated: true, completion: nil)
     }
 
 }
